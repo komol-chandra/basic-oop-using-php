@@ -11,13 +11,11 @@ try {
         DB_USER, DB_PASS,
         [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"]);
     if ($dbh) {
-        printf("Database Connected using PDO!" . PHP_EOL);
+        printf("Database Connected using PDO!" . "<br>");
     }
 } catch (PDOException $e) {
     exit("Error: " . $e->getMessage());
 }
-
-// database connection using mysqli
 
 // $mysql = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 // if ($mysql->connect_errno) {
@@ -26,22 +24,25 @@ try {
 // }
 // printf("Database Connected using mysqli !");
 
-// insert data using PDO
+// read data using PDO
 
-$sql = "INSERT INTO `users`(`name`,`phone`,`city`,`date_added`)VALUES (:name,:phone,:city,:date)";
+$sql = "SELECT * FROM users WHERE city= :city";
 
 $query = $dbh->prepare($sql);
 
-$query->bindParam(':name', $name, PDO::PARAM_STR);
-$query->bindParam(':phone', $phone, PDO::PARAM_INT);
 $query->bindParam(':city', $city, PDO::PARAM_STR);
-$query->bindParam(':date', $date, PDO::PARAM_STR);
 
-$name  = "Joe";
-$phone = "1234567890";
-$city  = "New York";
-$date  = date('Y-m-d');
+$city = "New York";
 
 $query->execute();
-$lastInsertId = $dbh->lastInsertId();
-if ($lastInsertId > 0) {echo "OK";} else {echo "not OK";}
+
+$results = $query->fetchAll(PDO::FETCH_OBJ);
+
+if ($query->rowCount() > 0) {
+    foreach ($results as $result) {
+        echo $result->name . ", ";
+        echo $result->city . ", ";
+        echo $result->date_added . "<br>";
+
+    }
+}
