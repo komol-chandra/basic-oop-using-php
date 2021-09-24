@@ -45,3 +45,18 @@ $date  = date('Y-m-d');
 $query->execute();
 $lastInsertId = $dbh->lastInsertId();
 if ($lastInsertId > 0) {echo "OK";} else {echo "not OK";}
+// insert data using foreach
+$userData = [
+    ["Joe", "1231234567", "New York", $date],
+    ["Joseph", "037234561", "Tel Aviv", $date],
+];
+
+foreach ($userData as $key => $value) {
+    $name  = $value[0];
+    $phone = $value[1];
+    $city  = $value[2];
+    $date  = $value[3];
+    $query->execute();
+    $lastInsertId = $dbh->lastInsertId();
+    if ($lastInsertId > 0) {echo "array OK";} else {echo "not OK";}
+}
