@@ -17,6 +17,8 @@ try {
     exit("Error: " . $e->getMessage());
 }
 
+// read data using PDO
+
 $sql = "SELECT * FROM users WHERE city= :city";
 
 $query = $dbh->prepare($sql);
