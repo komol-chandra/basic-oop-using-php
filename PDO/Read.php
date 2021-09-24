@@ -17,6 +17,13 @@ try {
     exit("Error: " . $e->getMessage());
 }
 
+// $mysql = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+// if ($mysql->connect_errno) {
+//     printf('Connection Failed' . PHP_EOL, $mysql->connect_error);
+//     exit();
+// }
+// printf("Database Connected using mysqli !");
+
 // read data using PDO
 
 $sql = "SELECT * FROM users WHERE city= :city";
